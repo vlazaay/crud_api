@@ -13,5 +13,5 @@ make build up
 Install the application:
 
 ```shell
-make composer-install
+make composer-install db-refresh
 ```

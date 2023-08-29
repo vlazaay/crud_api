@@ -21,3 +21,15 @@ composer-update: ## Update the dependencies
 .PHONY: composer-check
 composer-check: ## Check the platform requirements
 	docker compose exec php sh -lc 'composer validate && composer check'
+
+.PHONY: db-refresh
+db-refresh: db-reset db-migrate ## Refresh the database migration
+
+.PHONY: db-migrate
+db-migrate: ## Start the database migration
+	docker compose exec php sh -lc './bin/console doctrine:migrations:migrate --no-interaction'
+
+.PHONY: db-reset
+db-reset: ## Reset the database migration
+	docker compose exec php sh -lc './bin/console doctrine:database:drop --if-exists --force'
+	docker compose exec php sh -lc './bin/console doctrine:database:create'

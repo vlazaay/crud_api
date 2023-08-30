@@ -1,18 +1,11 @@
 FROM php:8.1.21-fpm-alpine3.18
 
-RUN set -eux \
-    && apk add --no-cache \
-        icu-libs \
-        libintl
-
-RUN set -eux \
-    && apk add --no-cache --virtual .build-deps \
-        icu-dev \
-    && docker-php-ext-install -j$(nproc) intl \
-    && docker-php-ext-configure pdo_mysql --with-zlib-dir=/usr \
-    && docker-php-ext-install -j$(nproc) pdo_mysql \
-    && docker-php-source delete \
-    && apk del .build-deps
+RUN curl -sSLf \
+        -o /usr/local/bin/install-php-extensions \
+        https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions && \
+    chmod +x /usr/local/bin/install-php-extensions && \
+    docker-php-ext-install pdo_mysql && \
+    install-php-extensions gd xdebug
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 

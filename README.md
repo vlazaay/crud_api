@@ -21,3 +21,7 @@ Run tests:
 ```shell
 make test-functional
 ```
+
+Api documentation: 
+
+http://localhost/api/doc

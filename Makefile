@@ -33,3 +33,7 @@ db-migrate: ## Start the database migration
 db-reset: ## Reset the database migration
 	docker compose exec php sh -lc './bin/console doctrine:database:drop --if-exists --force'
 	docker compose exec php sh -lc './bin/console doctrine:database:create'
+
+.PHONY: test-functional
+test-functional: ## Run the application functional tests
+	docker compose exec php sh -lc './bin/phpunit --configuration ./phpunit.xml.dist --testsuite=Functional'

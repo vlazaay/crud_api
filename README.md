@@ -15,3 +15,9 @@ Install the application:
 ```shell
 make composer-install db-refresh
 ```
+
+Run tests:
+
+```shell
+make test-functional
+```
